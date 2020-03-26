@@ -1,0 +1,2 @@
+input   output a
+a b c
