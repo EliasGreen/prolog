@@ -1,0 +1,4 @@
+delete(X,[X|T],T).
+delete(X,[H|T],[H|NT]):-delete(X,T,NT).
+varia_rep(0,_,[]).
+varia_rep(N,L,[H|RVaria]):-N>0,N1 is N-1,delete(H,L,_),varia_rep(N1,L,RVaria).
