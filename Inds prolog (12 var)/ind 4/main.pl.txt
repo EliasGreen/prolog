@@ -1,0 +1,26 @@
+in_list([El|_],El).
+in_list([_|T],El):-in_list(T,El).
+
+shutit([_|[S|_]]):- S == 1.
+pravda([_|[S|_]]):- S == 0.
+
+podaril([_|[_|T]]):- T == [1].
+ne_podaril([_|[_|T]]):- T == [0].
+
+pr_guys:- Guys=[_,_,_],
+		in_list(Guys,[petr,_,_]),
+		in_list(Guys,[vova,_,_]),
+    	in_list(Guys,[roma,_,_]),
+    	in_list(Guys,[andrei,_,_]),
+
+    	(
+        shutit([vova,_,_]),shutit([petr,_,_]);
+        pravda([vova,_,_])
+        ),
+    
+    	(
+        ne_podaril([andrei,_,_]),ne_podaril([petr,_,_]);
+        podaril([petr,_,_])
+        ),
+    
+		write(Guys).
