@@ -41,21 +41,22 @@ check_E([H|T], K):-member1(e, H) -> check_count(H, K); check_E(T, K).
 check_F([], _).
 check_F([H|T], K):-member1(f, H) -> check_count(H, K); check_F(T, K).
 
-main_pred(N, MList, K, M, L):- varia_rep(N,MList, L), count_occurrences(L, Occ),
+main_pred(N, MList, K, M, Fl):- varia_rep(N,MList, L), count_occurrences(L, Occ),
     check_A(Occ, K),
     check_B(Occ, K),
     check_C(Occ, K),
     check_D(Occ, M),
     check_E(Occ, 1),
     check_F(Occ, 1),
-    write(L), nl.
+	write_list_to_file('out.txt', L),
+    append(Fl, L, Fl), write('FL'), write(Fl), write_list_to_file('out.txt', Fl), nl.
 
-loop_through_list([]).
-loop_through_list([Head|Tail]) :-
-    write(Head),
-    loop_through_list(Tail).
+loop_through_list([], S):-write(S, '\n').
+loop_through_list([Head|Tail], S) :-
+    write(S, Head),
+    loop_through_list(Tail, S).
 
 write_list_to_file(Filename,List) :-
-    tell(Filename),
-    loop_through_list(List),
-    told.
+    open(Filename, append, S),
+    loop_through_list(List, S),
+    close(S).
