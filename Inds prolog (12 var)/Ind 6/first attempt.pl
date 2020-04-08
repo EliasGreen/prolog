@@ -7,7 +7,7 @@ edge(a,b,graph).
 edge(c,b,graph).
 edge(d,c,graph).
 
-notCycled(graph)-:.
+notCycled(graph):-.
 
 connected(graph):-.
 
