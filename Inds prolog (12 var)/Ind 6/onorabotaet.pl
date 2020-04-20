@@ -1,10 +1,16 @@
-/* Задаем граф */
-node(a,graph).
-node(b,graph).
-node(c,graph).
+-:dynamic 
+	node/2.
+	
+-:dynamic 
+	edge/3.
+	
+cleanup_db :-
+      retractall(node(_,_)), retractall(edge(_,_,_)).
 
-edge(a,b,graph).
-edge(c,b,graph).
+
+saveDB:-tell('graph_db.txt'), listing(node), listing(edge), told.
+loadDB:-cleanup_db, ['graph_db.txt'].
+
 
 /* Предикат проверки смежности вершин X и Y графа Graph */
 adjacent(X,Y,Graph) :-
