@@ -1,0 +1,91 @@
+// Learn more about F# at http://fsharp.org
+
+open System
+
+let rec read_list n = 
+       if n=0 then []
+       else
+       let Head = System.Convert.ToInt32(System.Console.ReadLine())
+       let Tail = read_list (n-1)
+       Head::Tail
+   
+let read_data = 
+    let n=System.Convert.ToInt32(System.Console.ReadLine())
+    read_list n
+
+let trd (_,t) = t
+let trd1 (t,_) = t
+
+let rec prcsLst l max el =
+    match l with
+    | [] -> el
+    | hd::tl ->
+        if (trd hd) > max then
+            prcsLst tl (trd hd) (trd1 hd)
+        else
+            prcsLst tl max el
+
+
+
+
+let rec op_list l f = 
+    match l with
+    |head::[] -> head
+    |head::t -> f head (op_list t f) 
+    |[] -> 0
+
+let rec multiplicity x ys =
+    match ys with
+    | []                -> 0
+    | y::tail when x=y  -> 1 + multiplicity x tail
+    | y::tail           -> multiplicity x tail
+
+let max x y =
+    if x<y then x
+    else y
+
+let prog list = 
+    (op_list list min)
+
+let rec reverse list =
+    match list with
+    |[] -> []
+    |[x] -> [x]
+    | head::tail -> reverse tail @ [head]
+
+let rec rev list acc=
+    match list with
+    | [] -> acc
+    | [x] -> x::acc
+    | head::tail -> rev tail (head::acc)
+
+
+let sort l = 
+  let rec sortUtil acc rev l =
+    match l, rev with
+    | [], true -> acc |> reverse
+    | [], false -> acc |> reverse |> sortUtil [] true
+    | x::y::tl, _ when x > y -> sortUtil (y::acc) false (x::tl)
+    | hd::tl, _ -> sortUtil (hd::acc) rev tl
+  sortUtil [] true l
+
+let countoccurences list =
+    match list with
+    | x::xs -> 
+        let rec temp list collecting counted =
+            match list with
+            | x::xs when x=collecting -> temp xs collecting (counted+1)
+            | x::xs -> (collecting,counted)::temp xs x 1
+            | [] -> (collecting,counted)::[]
+        temp xs x 1
+    | [] -> []
+
+[<EntryPoint>]
+let main argv =
+    
+    let l = read_data
+    let tpls = countoccurences (sort l)
+    System.Console.Write(tpls);
+    System.Console.Write(prcsLst tpls 0 0);
+    let z = System.Console.ReadKey()
+    0 // return an integer exit code
