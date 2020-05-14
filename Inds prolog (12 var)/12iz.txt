@@ -80,12 +80,30 @@ let countoccurences list =
         temp xs x 1
     | [] -> []
 
+
+let rec finallistget list i element final_list =
+    match list with
+       | h::t -> 
+           if h=element then finallistget t (i+1) element (final_list@[i])
+           else finallistget t (i+1) element final_list
+       | [] -> final_list
+
+let rec write_list list =
+    match list with 
+    |[] ->  let z=System.Console.ReadKey()
+            0
+    |h::t -> System.Console.Write(h.ToString())
+             System.Console.Write(" ")
+             write_list t   
+
 [<EntryPoint>]
 let main argv =
     
     let l = read_data
     let tpls = countoccurences (sort l)
-    System.Console.Write(tpls);
-    System.Console.Write(prcsLst tpls 0 0);
+    //System.Console.Write(tpls);
+    let fin_list = finallistget l 0 (prcsLst tpls 0 0) []
+    System.Console.Write("Ындексы:");
+    write_list fin_list
     let z = System.Console.ReadKey()
     0 // return an integer exit code
