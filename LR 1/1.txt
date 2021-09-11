@@ -1,0 +1,14 @@
+parent(Pam,Arnold).
+parent(Ivan,Arnold).
+parent(Maria,Ekaterina).
+parent(Arnold,Ekaterina).
+parent(Ekaterina,Andrei).
+
+male(Ivan).
+male(Arnold).
+male(Andrei).
+
+female(Pam).
+female(Maria).
+female(Ekaterina).
+	
